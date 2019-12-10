@@ -7,16 +7,13 @@ const knexInstance = knex({
 })
 
 function searchByItemName(searchTerm) {
-knexInstance('shopping_list').select('*')
+knexInstance('shopping_list').select('name', 'price', 'category')
+    .where(knexInstance.raw('LOWER(name) = ?', searchTerm.toLowerCase()))
     .then(result => {
-        let res = '';
-        res = result.filter(item => {
-            return item.name.toLowerCase() === searchTerm.toLowerCase()
-        })
-        console.log(res)
+        console.log(result)
     })
 }
-searchByItemName(' ');
+searchByItemName('not dogs');
 
 function paginateProducts(pageNumber){
     const productsPerPage = 6
@@ -61,7 +58,7 @@ function costPerCategory(){
         .from('shopping_list')
         .groupBy('category')
         .then(result =>{
-            console.log('COST PER CATEOGRY');
+            console.log('COST PER CATEGORY');
             console.log(result);
         })
 }
