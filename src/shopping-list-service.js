@@ -1,6 +1,6 @@
 const ItemsService = {
-    getAllItems() {
-        return 'all the items!'
+    getAllItems(knex) {
+        return knex.select('*').from('shopping_list')
     }
 }
 module.exports = ItemsService
