@@ -13,7 +13,7 @@ describe(`Items service object`, function() {
             category: 'Main'
         },
         {
-            title: 'Death Coffee',
+            name: 'Death Coffee',
             category: 'Breakfast'
         },
     ]
@@ -23,6 +23,15 @@ describe(`Items service object`, function() {
                 connection: process.env.TEST_DB_URL,
             })
         })
+
+        before(() => {
+            return db
+                .into('shopping_list')
+                .insert(testItems)
+        })
+
+        after(() => db.destroy())
+
     describe(`getAllItems()`, () => {
         it(`resolves all items from 'knex_practice' table`, () => {
             //test that ItemsService.getAllItems gets data from table
